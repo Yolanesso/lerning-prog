@@ -1,0 +1,1 @@
+-- nu tut tipo data for insert
