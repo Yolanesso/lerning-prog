@@ -1,0 +1,149 @@
+.lesson-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.lesson-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #afafaf;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  color: #777;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 16px;
+  background-color: #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #58cc02;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.lesson-title {
+  color: #3c3c3c;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.option-card {
+  background-color: white;
+  border: 2px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b4b4b;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0px rgba(229, 229, 229, 1);
+}
+
+.option-card:hover {
+  background-color: #f7f7f7;
+}
+
+.option-card.selected {
+  border-color: #1cb0f6;
+  background-color: #ddf4ff;
+}
+
+.option-card.correct {
+  border-color: #58cc02;
+  background-color: #d7ffb8;
+  color: #58a700;
+}
+
+.option-card.wrong {
+  border-color: #ff4b4b;
+  background-color: #ffdfe0;
+  color: #ea2b2b;
+}
+
+.lesson-footer {
+  margin-top: auto;
+  border-top: 2px solid #e5e5e5;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feedback-message {
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.feedback-message.success {
+  background-color: #d7ffb8;
+  color: #58a700;
+}
+
+.feedback-message.error {
+  background-color: #ffdfe0;
+  color: #ea2b2b;
+}
+
+.check-btn {
+  padding: 15px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  background-color: #e5e5e5;
+  color: #afafaf;
+  box-shadow: 0 4px 0 #afafaf;
+  transition: all 0.1s ease;
+}
+
+.check-btn.active {
+  background-color: #58cc02;
+  color: white;
+  box-shadow: 0 4px 0 #58a700;
+}
+
+.check-btn.active:hover {
+  background-color: #61e002;
+}
+
+.check-btn.active:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #58a700;
+}

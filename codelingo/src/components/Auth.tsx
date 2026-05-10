@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Auth.css';
 
-export function Auth() {
+export function Auth({ onLogin }: { onLogin: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,9 +26,11 @@ export function Auth() {
     if (isLogin) {
       console.log('Отправляем на сервер:', { email, password });
       alert('Авторизация прошла успешно!');
+      onLogin();
     } else {
       console.log('Отправляем на сервер:', { name, email, password });
       alert('Регистрация прошла успешно!');
+      onLogin();
     }
   };
 

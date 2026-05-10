@@ -1,0 +1,92 @@
+.course-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.course-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.course-title {
+  color: #3c3c3c;
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: 800;
+  margin-top: 0;
+}
+
+.course-subtitle {
+  color: #777;
+  font-size: 18px;
+  margin: 0;
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.course-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0px rgba(229, 229, 229, 1);
+  text-align: left;
+}
+
+.course-card:hover {
+  background-color: #f0fdf4;
+  border-color: #58cc02;
+}
+
+.course-card:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0px rgba(229, 229, 229, 1);
+}
+
+.course-icon {
+  font-size: 40px;
+  margin-right: 20px;
+  background-color: #f7f7f7;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+}
+
+.course-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-name {
+  color: #3c3c3c;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.course-desc {
+  color: #777;
+  font-size: 16px;
+  font-weight: 600;
+}
