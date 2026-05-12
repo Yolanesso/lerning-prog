@@ -3,6 +3,8 @@ import { Auth } from './components/Auth';
 import { CourseSelect } from './components/CourseSelect';
 import { BashLesson } from './components/BashLesson';
 import { BashLevels } from './components/BashLevels';
+import { JavaLesson } from './components/JavaLesson.';
+import { JavaLevels } from './components/JavaLevels';
 import './App.css';
 
 function App() {
@@ -34,6 +36,23 @@ function App() {
           onBack={() => setSelectedLesson(null)}
         />
       );
+    }
+
+    if (selectedCourse === 'java') {
+        if (selectedLesson === null) {
+            return (
+                <JavaLevels
+                    onSelect={(id) => setSelectedLesson(id)}
+                    onBack={() => setSelectedCourse('')}
+                />
+            );
+        }
+        return (
+            <JavaLesson
+                lessonId={selectedLesson}
+                onBack={() => setSelectedLesson(null)}
+            />
+        );
     }
 
     return (
