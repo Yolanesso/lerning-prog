@@ -219,7 +219,17 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 correctAnswer: 'final',
                 placeholder: 'слово?'
             },
-
+            {
+                type: 'choice',
+                title: 'Какова главная задача Сборщика мусора (Garbage Collector) в Java?',
+                correctOption: 1,
+                options: [
+                    { id: 0, text: 'удалять неиспользуемые файлы `.class` с жесткого диска для экономии места' },
+                    { id: 1, text: 'автоматически находить и удалять объекты в куче (Heap), на которые больше нет ссылок' },
+                    { id: 2, text: 'закрывать открытые консольные окна и завершать работу зависших программ' },
+                    { id: 3, text: 'шифровать исходный код программы перед пушем в репозиторий' }
+                ]
+            }
         ]
     };
 
