@@ -116,7 +116,19 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 codePrefix: 'if (x ',
                 correctAnswer: '== y',
                 placeholder: 'оператор и переменная...'
-            }
+            },
+            {
+                type: 'choice',
+                title: 'Как сделать бесконечный цикл?',
+                correctOption: 3,
+                options: [
+                    {id: 0, text: 'try a = infinity'},
+                    {id: 1, text: 'throw new = infinity'},
+                    {id: 2, text: 'infinity++;'},
+                    {id: 3, text: 'while (true) {}'}
+                ]
+            },
+
         ],
         3: [
             {
