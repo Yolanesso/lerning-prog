@@ -53,6 +53,17 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 codePrefix: 'System.out.',
                 correctAnswer: 'println',
                 placeholder: 'метод...'
+            },
+            {
+                type: "choice",
+                title: 'Как называется входной главный метод в котором начинается выполнение программы?',
+                correctOption: 1,
+                options: [
+                    {id: 0, text: 'glavniyMethod()'},
+                    {id: 1, text: 'main()'},
+                    {id: 2, text: 'makefile()'},
+                    {id: 3, text: 'runner()'}
+                ]
             }
         ],
         2: [
