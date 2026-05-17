@@ -39,7 +39,7 @@
 
 .progress-fill {
   height: 100%;
-  background-color: #58cc02;
+  background-color: var(--theme-color, #58cc02);
   border-radius: 8px;
   transition: width 0.3s ease;
 }
@@ -82,8 +82,8 @@
 }
 
 .option-card.correct {
-  border-color: #58cc02;
-  background-color: #d7ffb8;
+  border-color: var(--theme-color, #58cc02);
+  background-color: var(--theme-light, #e5f5da);
   color: #58a700;
 }
 
@@ -134,18 +134,18 @@
 }
 
 .check-btn.active {
-  background-color: #58cc02;
+  background-color: var(--theme-color, #58cc02);
   color: white;
-  box-shadow: 0 4px 0 #58a700;
+  box-shadow: 0 4px 0 var(--theme-shadow, #58a700);
 }
 
 .check-btn.active:hover {
-  background-color: #61e002;
+  background-color: var(--theme-hover, #61e002);
 }
 
 .check-btn.active:active {
   transform: translateY(4px);
-  box-shadow: 0 0 0 #58a700;
+  box-shadow: 0 0 0 var(--theme-shadow, #58a700);
 }
 
 .input-exercise {
@@ -167,7 +167,7 @@
 }
 
 .code-prefix {
-  color: #58cc02;
+  color: var(--theme-color, #58cc02);
   font-weight: bold;
   white-space: pre;
 }
@@ -175,7 +175,7 @@
 .code-input {
   background: transparent;
   border: none;
-  border-bottom: 2px solid #58cc02;
+  border-bottom: 2px solid var(--theme-color, #58cc02);
   color: white;
   font-family: inherit;
   font-size: inherit;
@@ -185,8 +185,8 @@
 }
 
 .code-input.correct {
-  border-bottom-color: #58cc02;
-  color: #58cc02;
+  border-bottom-color: var(--theme-color, #58cc02);
+  color: var(--theme-color, #58cc02);
 }
 
 .code-input.wrong {
