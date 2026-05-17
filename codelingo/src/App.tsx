@@ -3,7 +3,7 @@ import { Auth } from './components/Auth';
 import { CourseSelect } from './components/CourseSelect';
 import { BashLesson } from './components/BashLesson';
 import { BashLevels } from './components/BashLevels';
-import { JavaLesson } from './components/JavaLesson.';
+import { JavaLesson } from './components/JavaLesson';
 import { JavaLevels } from './components/JavaLevels';
 import { PythonLesson } from './components/PythonLesson';
 import { PythonLevels } from './components/PythonLevels';

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { JavaLesson } from '../components/JavaLesson..tsx';
+import { JavaLesson } from '../components/JavaLesson';
 
 describe('JavaLesson Component', () => {
     it('должен отображать первый вопрос первого урока по Java', () => {
