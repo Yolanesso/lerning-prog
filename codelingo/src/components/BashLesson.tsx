@@ -1,4 +1,9 @@
 import { useState } from 'react';
+import { bashQuestions } from '../data/bashQuestions';
+import { LessonHeader } from './lesson/LessonHeader';
+import { ChoiceExercise } from './lesson/ChoiceExercise';
+import { InputExercise } from './lesson/InputExercise';
+import { LessonFooter } from './lesson/LessonFooter';
 import './BashLesson.css';
 
 interface BashLessonProps {
@@ -12,75 +17,24 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const allQuestions: Record<number, any[]> = {
-    1: [
-      {
-        type: 'choice',
-        title: 'Какая команда показывает список файлов в текущей папке?',
-        correctOption: 1,
-        options: [
-          { id: 0, text: 'cd' },
-          { id: 1, text: 'ls' },
-          { id: 2, text: 'mkdir' },
-          { id: 3, text: 'pwd' }
-        ]
-      },
-      {
-        type: 'input',
-        title: 'Допиши команду, чтобы увидеть путь к текущей директории:',
-        codePrefix: '',
-        correctAnswer: 'pwd',
-        placeholder: 'Введите команду...'
-      }
-    ],
-    2: [
-      {
-        type: 'choice',
-        title: 'Как перейти в другую директорию (папку)?',
-        correctOption: 0,
-        options: [
-          { id: 0, text: 'cd' },
-          { id: 1, text: 'move' },
-          { id: 2, text: 'go' },
-          { id: 3, text: 'dir' }
-        ]
-      },
-      {
-        type: 'input',
-        title: 'Допиши команду, чтобы создать папку с названием "work":',
-        codePrefix: 'mkdir ',
-        correctAnswer: 'work',
-        placeholder: 'имя папки...'
-      }
-    ],
-    3: [
-      {
-        type: 'input',
-        title: 'Создай пустой файл с названием "script.sh":',
-        codePrefix: 'touch ',
-        correctAnswer: 'script.sh',
-        placeholder: 'имя файла...'
-      },
-      {
-        type: 'choice',
-        title: 'Какая команда выводит содержимое файла в терминал?',
-        correctOption: 3,
-        options: [
-          { id: 0, text: 'show' },
-          { id: 1, text: 'open' },
-          { id: 2, text: 'ls' },
-          { id: 3, text: 'cat' }
-        ]
-      }
-    ]
-  };
-
-  const questions = allQuestions[lessonId] || [];
+  const questions = bashQuestions[lessonId] || [];
 
   if (currentQuestionIndex >= questions.length) {
     return (
-      <div className="lesson-container" style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-        <h1 style={{ color: '#58cc02', fontSize: '40px', marginBottom: '20px' }}>Поздравляем! 🎉</h1>
+      <div 
+        className="lesson-container" 
+        style={{ 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          textAlign: 'center',
+          '--theme-color': '#58cc02',
+          '--theme-shadow': '#58a700',
+          '--theme-hover': '#61e002',
+          '--theme-light': '#e5f5da',
+          '--theme-text-color': 'white'
+        } as React.CSSProperties}
+      >
+        <h1 style={{ color: 'var(--theme-color)', fontSize: '40px', marginBottom: '20px' }}>Поздравляем! 🎉</h1>
         <p style={{ color: '#777', fontSize: '20px', marginBottom: '40px' }}>
           Вы успешно прошли Урок {lessonId} по Bash.
         </p>
@@ -96,8 +50,8 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-
-  const isCorrect = currentQuestion.type === 'choice'
+  
+  const isCorrect = currentQuestion.type === 'choice' 
     ? selectedOption === currentQuestion.correctOption
     : inputValue.trim().toLowerCase() === currentQuestion.correctAnswer.toLowerCase();
 
@@ -116,76 +70,58 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
     setIsSubmitted(false);
   };
 
+  const isNextDisabled = currentQuestion.type === 'choice' 
+    ? selectedOption === null 
+    : inputValue.trim() === '';
+
   return (
-    <div className="lesson-container">
-      <div className="lesson-header">
-        <button className="back-btn" onClick={onBack}>✖</button>
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progressPercent}%` }}></div>
-        </div>
-      </div>
+    <div 
+      className="lesson-container"
+      style={{
+        '--theme-color': '#58cc02',
+        '--theme-shadow': '#58a700',
+        '--theme-hover': '#61e002',
+        '--theme-light': '#e5f5da',
+        '--theme-text-color': 'white'
+      } as React.CSSProperties}
+    >
+      <LessonHeader 
+        progressPercent={progressPercent} 
+        onBack={onBack} 
+      />
 
       <h2 className="lesson-title">{currentQuestion.title}</h2>
 
       {currentQuestion.type === 'choice' ? (
-        <div className="options-grid">
-          {currentQuestion.options.map((opt) => {
-            let className = "option-card";
-            if (selectedOption === opt.id) className += " selected";
-            if (isSubmitted) {
-              if (opt.id === currentQuestion.correctOption) className += " correct";
-              else if (selectedOption === opt.id) className += " wrong";
-            }
-
-            return (
-              <button
-                key={opt.id}
-                className={className}
-                onClick={() => {
-                  if (!isSubmitted) setSelectedOption(opt.id);
-                }}
-              >
-                {opt.text}
-              </button>
-            );
-          })}
-        </div>
+        <ChoiceExercise 
+          options={currentQuestion.options}
+          selectedOption={selectedOption}
+          correctOption={currentQuestion.correctOption}
+          isSubmitted={isSubmitted}
+          onSelect={setSelectedOption}
+        />
       ) : (
-        <div className="input-exercise">
-          <div className="code-input-container">
-            <span className="code-prefix">{currentQuestion.codePrefix}</span>
-            <input
-              type="text"
-              className={`code-input ${isSubmitted ? (isCorrect ? 'correct' : 'wrong') : ''}`}
-              placeholder={currentQuestion.placeholder}
-              value={inputValue}
-              onChange={(e) => !isSubmitted && setInputValue(e.target.value)}
-              autoFocus
-            />
-          </div>
-        </div>
+        <InputExercise
+          codePrefix={currentQuestion.codePrefix}
+          placeholder={currentQuestion.placeholder}
+          inputValue={inputValue}
+          isSubmitted={isSubmitted}
+          isCorrect={isCorrect}
+          onChange={setInputValue}
+        />
       )}
 
-      <div className="lesson-footer">
-        {isSubmitted && (
-          <div className={`feedback-message ${isCorrect ? 'success' : 'error'}`}>
-            {isCorrect
-              ? 'Отлично! Правильный ответ.'
-              : `Неверно. Правильный ответ: ${currentQuestion.type === 'choice'
-                ? currentQuestion.options.find((o: any) => o.id === currentQuestion.correctOption)?.text
-                : currentQuestion.correctAnswer}`
-            }
-          </div>
-        )}
-
-        <button
-          className={`check-btn ${(currentQuestion.type === 'choice' ? selectedOption !== null : inputValue.trim() !== '') ? 'active' : ''}`}
-          onClick={isSubmitted ? handleNext : handleSubmit}
-          disabled={!isSubmitted && (currentQuestion.type === 'choice' ? selectedOption === null : inputValue.trim() === '')}
-        >
-          {isSubmitted ? 'Продолжить' : 'Проверить'}
-        </button>
-      </div>
+      <LessonFooter
+        isSubmitted={isSubmitted}
+        isCorrect={isCorrect}
+        questionType={currentQuestion.type}
+        correctOption={currentQuestion.type === 'choice' ? currentQuestion.correctOption : undefined}
+        options={currentQuestion.type === 'choice' ? currentQuestion.options : undefined}
+        correctAnswer={currentQuestion.type === 'input' ? currentQuestion.correctAnswer : undefined}
+        isNextDisabled={isNextDisabled}
+        onSubmit={handleSubmit}
+        onNext={handleNext}
+      />
     </div>
   );
 }
