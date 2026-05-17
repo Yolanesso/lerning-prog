@@ -5,6 +5,8 @@ import { BashLesson } from './components/BashLesson';
 import { BashLevels } from './components/BashLevels';
 import { JavaLesson } from './components/JavaLesson.';
 import { JavaLevels } from './components/JavaLevels';
+import { PythonLesson } from './components/PythonLesson';
+import { PythonLevels } from './components/PythonLevels';
 import './App.css';
 
 function App() {
@@ -49,6 +51,23 @@ function App() {
         }
         return (
             <JavaLesson
+                lessonId={selectedLesson}
+                onBack={() => setSelectedLesson(null)}
+            />
+        );
+    }
+
+    if (selectedCourse === 'python') {
+        if (selectedLesson === null) {
+            return (
+                <PythonLevels
+                    onSelect={(id) => setSelectedLesson(id)}
+                    onBack={() => setSelectedCourse('')}
+                />
+            );
+        }
+        return (
+            <PythonLesson
                 lessonId={selectedLesson}
                 onBack={() => setSelectedLesson(null)}
             />
