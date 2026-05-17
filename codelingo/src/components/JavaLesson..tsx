@@ -90,6 +90,13 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 correctAnswer: '=',
                 placeholder: 'символ...'
             },
+        {
+            type: 'input',
+            title: 'Допиши правильный условный оператор, чтобы код вывел сообщение',
+            codePrefix: '** (x < 0){\n sout("Минус");}\n',
+            correctAnswer: 'if',
+            placeholder: 'оператор?'
+        },
         ],
         2: [
             {
@@ -129,7 +136,7 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     { id: 2, text: 'init' },
                     { id: 3, text: 'main' }
                 ]
-            }
+            },
         ]
     };
 
