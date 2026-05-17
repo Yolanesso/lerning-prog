@@ -71,8 +71,18 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 codePrefix: '*******  flag = true;',
                 correctAnswer: 'boolean',
                 placeholder: 'тип данных?'
-            }
-
+            },
+            {
+                type: 'choice',
+                title: 'Как сделать комментарий/закоментировать строчку кода в джаве?',
+                correctOption: 3,
+                options: [
+                    {id: 0, text: '#* int a = 10;'},
+                    {id: 1, text: './ String name;'},
+                    {id: 2, text: '$$ switch (choice) {}'},
+                    {id: 3, text: '// List list = new ArrayList'}
+                ]
+            },
         ],
         2: [
             {
