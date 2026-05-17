@@ -64,7 +64,15 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     {id: 2, text: 'makefile()'},
                     {id: 3, text: 'runner()'}
                 ]
+            },
+            {
+                type: 'input',
+                title: 'Какой тип данных хранит True || False?',
+                codePrefix: '*******  flag = true;',
+                correctAnswer: 'boolean',
+                placeholder: 'тип данных?'
             }
+
         ],
         2: [
             {
