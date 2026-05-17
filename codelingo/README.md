@@ -1,73 +1,114 @@
-# React + TypeScript + Vite
+# lerning-prog
+лол кек чебурек
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Сейчас в проекте есть:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- фронтенд на React + TypeScript в папке `codelingo/`;
+- три курса на фронте: Bash, Java, Python (выбираются после логина);
+- схема базы данных в `database/schema.sql`;
+- стартовые данные в `database/data.sql` (пока только для Python);
+- описание структуры БД в `database/database_structure.md`.
 
-## React Compiler
+Бэкенда пока нет, фронт с базой напрямую не общается. Логин — заглушка, любой email + пароль = вход.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Фронтенд
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Что есть
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- регистрация / логин (просто проверяет что поля не пустые, без сервера)
+- экран выбора курса (Python / Java / Bash)
+- внутри каждого курса — три уровня
+- в уровнях вопросы двух типов: выбор варианта (`choice`) и вписать ответ (`input`)
+- прогресс-бар, фидбек после ответа, экран «урок пройден»
+- тесты (vitest + testing-library) на Bash, Java и Python уроки.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Как запустить
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Нужен Node.js (любой свежий)
+
+```bash
+cd codelingo
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Откроется на `http://localhost:5173/`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Тесты:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm test
 ```
+
+Сборка прода (если зачем-то надо):
+
+```bash
+npm run build
+```
+
+---
+
+## База данных
+
+### Что нужно
+
+- установленный PostgreSQL;
+- доступ к `psql` или pgAdmin 4 или еще какие то улититы другие, ну я этими пользуюсь;
+- пустая база данных, например `lerning_prog`.
+
+### Быстрый запуск через `psql`
+
+#### 1. Создать базу данных
+
+```sql
+CREATE DATABASE lerning_prog;
+```
+
+#### 2. Подключиться к ней
+
+```bash
+psql -U postgres -d lerning_prog
+```
+
+#### 3. Применить схему
+
+```sql
+\i database/schema.sql
+```
+
+#### 4. Применить стартовые данные
+
+```sql
+\i database/data.sql
+```
+
+### Запуск через pgAdmin 4
+
+1. Подключиться к локальному PostgreSQL-серверу (там надо localhost вписать, остальное хоть че).
+2. Создать новую базу данных `lerning_prog`.
+3. Открыть `Query Tool` для этой базы.
+4. Сначала выполнить содержимое `database/schema.sql`. (туда закинуть и execute (f5) )
+5. Потом выполнить содержимое `database/data.sql`. (тоже туда закинуть + f5)
+
+
+### Что загрузится после seed
+
+После выполнения `database/data.sql` в базе появятся:
+
+- язык программирования `python`;
+- один курс `Основы Python`;
+- три урока (Переменные, Условные операторы, Циклы);
+- 11 упражнений внутри уроков.
+
+Вопросы лежат в JSON-поле `exercises.payload` в том же виде, в котором их рисует фронт. Подробнее — в `database/database_structure.md`.
+
+### Важно
+
+- сначала всегда выполняется `database/schema.sql`;
+- потом `database/data.sql`;
+- текущий seed минимальный и пока содержит данные только для **pythonchika**;
+- курсы Bash и Java сейчас живут только на фронте , в БД их пока нет;
+- файл `database/data.sql` рассчитан на пустую базу.
