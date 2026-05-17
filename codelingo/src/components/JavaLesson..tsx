@@ -212,6 +212,13 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     {id:3, text: 'такого не существует'}
                 ]
             },
+            {
+                type: 'input',
+                title: 'Какое ключевое слово делает переменную константой?',
+                codePrefix: '***** double PI = 3.14159;',
+                correctAnswer: 'final',
+                placeholder: 'слово?'
+            },
 
         ]
     };
