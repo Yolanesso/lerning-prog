@@ -135,7 +135,7 @@
 
 .check-btn.active {
   background-color: var(--theme-color, #58cc02);
-  color: white;
+  color: var(--theme-text-color, white);
   box-shadow: 0 4px 0 var(--theme-shadow, #58a700);
 }
 
