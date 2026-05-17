@@ -200,7 +200,19 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     {id: 2, text: 'краткий способ записать функцию (метод) без имени, которую можно передавать как аргумент'},
                     {id: 3, text: 'отключаем ошибки в компиляции'}
                 ]
-            }
+            },
+            {
+                type: 'choice',
+                title: 'Базовые классы для работы с символьными файловыми потоками?',
+                correctOption: 1,
+                options: [
+                    {id: 0, text: 'Text text = new text'},
+                    {id: 1, text: 'FileWriter / FileReader'},
+                    {id: 2, text: 'AutoTextWriterReader'},
+                    {id:3, text: 'такого не существует'}
+                ]
+            },
+
         ]
     };
 
