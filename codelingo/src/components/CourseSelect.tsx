@@ -5,7 +5,6 @@ interface CourseSelectProps {
 }
 
 export function CourseSelect({ onSelect }: CourseSelectProps) {
-  // Простой массив с доступными курсами
   const courses = [
     { id: 'python', name: 'Python', icon: '🐍', desc: 'Отличный выбор для старта' },
     { id: 'java', name: 'Java', icon: '☕', desc: 'Мощный и надежный' },

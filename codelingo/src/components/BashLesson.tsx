@@ -6,36 +6,13 @@ interface BashLessonProps {
   onBack: () => void;
 }
 
-interface QuestionOption {
-  id: number;
-  text: string;
-}
-
-interface ChoiceQuestion {
-  type: 'choice';
-  title: string;
-  correctOption: number;
-  options: QuestionOption[];
-}
-
-interface InputQuestion {
-  type: 'input';
-  title: string;
-  codePrefix: string;
-  correctAnswer: string;
-  placeholder: string;
-}
-
-type Question = ChoiceQuestion | InputQuestion;
-
 export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Вопросы для каждого уровня
-  const allQuestions: Record<number, Question[]> = {
+  const allQuestions: Record<number, any[]> = {
     1: [
       {
         type: 'choice',
@@ -119,9 +96,8 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  
-  // Проверка правильности
-  const isCorrect = currentQuestion.type === 'choice' 
+
+  const isCorrect = currentQuestion.type === 'choice'
     ? selectedOption === currentQuestion.correctOption
     : inputValue.trim().toLowerCase() === currentQuestion.correctAnswer.toLowerCase();
 
@@ -178,8 +154,8 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
         <div className="input-exercise">
           <div className="code-input-container">
             <span className="code-prefix">{currentQuestion.codePrefix}</span>
-            <input 
-              type="text" 
+            <input
+              type="text"
               className={`code-input ${isSubmitted ? (isCorrect ? 'correct' : 'wrong') : ''}`}
               placeholder={currentQuestion.placeholder}
               value={inputValue}
@@ -195,9 +171,9 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
           <div className={`feedback-message ${isCorrect ? 'success' : 'error'}`}>
             {isCorrect
               ? 'Отлично! Правильный ответ.'
-              : `Неверно. Правильный ответ: ${currentQuestion.type === 'choice' 
-                  ? currentQuestion.options.find((o: QuestionOption) => o.id === currentQuestion.correctOption)?.text 
-                  : currentQuestion.correctAnswer}`
+              : `Неверно. Правильный ответ: ${currentQuestion.type === 'choice'
+                ? currentQuestion.options.find((o: any) => o.id === currentQuestion.correctOption)?.text
+                : currentQuestion.correctAnswer}`
             }
           </div>
         )}

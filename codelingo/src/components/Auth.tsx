@@ -22,7 +22,6 @@ export function Auth({ onLogin }: { onLogin: () => void }) {
       return;
     }
 
-    // Имитация отправки данных (пока без реального бэкенда)
     if (isLogin) {
       console.log('Отправляем на сервер:', { email, password });
       alert('Авторизация прошла успешно!');
