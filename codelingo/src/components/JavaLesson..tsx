@@ -146,6 +146,17 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                 correctAnswer: '4',
                 placeholder: 'число значений'
             },
+            {
+                type: 'choice',
+                title: 'При каком условии два соседних элемента (arr[i] и arr[i+1]) поменяются местами при сортировке по возрастанию?',
+                correctOption: 2,
+                options: [
+                    { id: 0, text: 'Если они равны (arr[i] == arr[i+1])' },
+                    { id: 1, text: 'Если левый элемент меньше правого (arr[i] < arr[i+1])' },
+                    { id: 2, text: 'Если левый элемент больше правого (arr[i] > arr[i+1])' },
+                    { id: 3, text: 'Они меняются местами всегда, без всяких условий' }
+                ]
+            },
 
 
         ],
