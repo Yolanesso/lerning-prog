@@ -1,4 +1,4 @@
-import { QuestionOption } from '../../types/lesson';
+import type { QuestionOption } from '../../types/lesson';
 
 interface LessonFooterProps {
   isSubmitted: boolean;
