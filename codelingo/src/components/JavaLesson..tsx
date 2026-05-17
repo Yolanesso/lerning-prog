@@ -138,7 +138,15 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     {id: 2, text: 'класс для перечислений констант'},
                     {id: 3, text: 'не содержит наследование, конструкторы, не является шаблоном'}
                 ]
-            }
+            },
+            {
+                type: 'input',
+                title: 'Как создать массив из 4 целых чисел на джава?',
+                codePrefix: 'int[] numbers = new int[?]',
+                correctAnswer: '4',
+                placeholder: 'число значений'
+            },
+
 
         ],
         3: [
