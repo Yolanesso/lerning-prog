@@ -83,6 +83,13 @@ export function JavaLesson({ lessonId, onBack }: JavaLessonProps) {
                     {id: 3, text: '// List list = new ArrayList'}
                 ]
             },
+            {
+                type: 'input',
+                title: 'Какой написать оператор присвоения? (Вместо ?)',
+                codePrefix: 'int year ? 19;',
+                correctAnswer: '=',
+                placeholder: 'символ...'
+            },
         ],
         2: [
             {
