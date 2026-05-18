@@ -1,2 +1,24 @@
-package com.example.backend.entity;public class LessonCompletion {
+package com.example.backend.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "lesson_completions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class LessonCompletion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
 }
