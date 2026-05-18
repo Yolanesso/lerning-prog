@@ -3,105 +3,121 @@ import './Auth.css';
 
 export function Auth({ onLogin }: { onLogin: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password) {
-      setError('Пожалуйста, заполните все поля!');
-      return;
-    }
+    const url = isLogin
+        ? 'http://localhost:8080/api/auth/login'
+        : 'http://localhost:8080/api/auth/register';
 
-    if (!isLogin && !name) {
-      setError('Пожалуйста, введите ваше имя!');
-      return;
-    }
+    // Формируем объект для отправки. Для логина почта обычно не нужна,
+    const payload = isLogin
+        ? { username, password }
+        : { username, email, password };
 
-    if (isLogin) {
-      console.log('Отправляем на сервер:', { email, password });
-      alert('Авторизация прошла успешно!');
-      onLogin();
-    } else {
-      console.log('Отправляем на сервер:', { name, email, password });
-      alert('Регистрация прошла успешно!');
-      onLogin();
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        if (isLogin) {
+          const token = await response.text();
+          localStorage.setItem('token', token);
+          onLogin();
+        } else {
+          alert('Регистрация успешна!');
+          setIsLogin(true);
+        }
+      } else {
+        const errorText = await response.text();
+        setError(errorText || 'Ошибка доступа');
+      }
+    } catch (err) {
+      setError('Не удается связаться с backend');
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1 className="auth-title">
-          {isLogin ? 'С возвращением!' : 'Создать аккаунт'}
-        </h1>
-        <p className="auth-subtitle">
-          {isLogin
-            ? 'Продолжи изучение программирования'
-            : 'Начни свой путь в мире кода прямо сейчас'}
-        </p>
+      <div className="auth-container">
+        <div className="auth-card">
+          <h1 className="auth-title">
+            {isLogin ? 'С возвращением!' : 'Создать аккаунт'}
+          </h1>
+          <p className="auth-subtitle">
+            {isLogin
+                ? 'Продолжи изучение программирования'
+                : 'Начни свой путь в мире кода прямо сейчас'}
+          </p>
 
-        {error && <div className="auth-error">{error}</div>}
+          {error && <div className="auth-error">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="auth-form">
-
-          {!isLogin && (
+          <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
-              <label>Имя</label>
+              <label>Имя пользователя</label>
               <input
-                type="text"
-                placeholder="Как тебя зовут?"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  placeholder="Твой логин"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
               />
             </div>
-          )}
 
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="твой@email.ru"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            {/* Поле Email показываем только при регистрации */}
+            {!isLogin && (
+                <div className="form-group">
+                  <label>Email</label>
+                  <input
+                      type="email"
+                      placeholder="example@mail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required={!isLogin}
+                  />
+                </div>
+            )}
+
+            <div className="form-group">
+              <label>Пароль</label>
+              <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+              />
+            </div>
+
+            <button type="submit" className="auth-button main-btn">
+              {isLogin ? 'Войти' : 'Зарегистрироваться'}
+            </button>
+          </form>
+
+          <div className="auth-switch">
+            <p>{isLogin ? 'Еще нет аккаунта?' : 'Уже есть аккаунт?'}</p>
+            <button
+                type="button"
+                className="switch-btn"
+                onClick={() => {
+                  setIsLogin(!isLogin);
+                  setError('');
+                }}
+            >
+              {isLogin ? 'Зарегистрируйся' : 'Войди'}
+            </button>
           </div>
-
-          <div className="form-group">
-            <label>Пароль</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button type="submit" className="auth-button main-btn">
-            {isLogin ? 'Войти' : 'Зарегистрироваться'}
-          </button>
-        </form>
-
-        <div className="auth-switch">
-          <p>
-            {isLogin ? 'Еще нет аккаунта?' : 'Уже есть аккаунт?'}
-          </p>
-          <button
-            type="button"
-            className="switch-btn"
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setError('');
-            }}
-          >
-            {isLogin ? 'Зарегистрируйся' : 'Войди'}
-          </button>
         </div>
       </div>
-    </div>
   );
 }
