@@ -7,14 +7,20 @@ import { JavaLesson } from './components/JavaLesson';
 import { JavaLevels } from './components/JavaLevels';
 import { PythonLesson } from './components/PythonLesson';
 import { PythonLevels } from './components/PythonLevels';
+import { Profile } from './components/Profile';
 import './App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedLesson, setSelectedLesson] = useState<number | null>(null);
+  const [showProfile, setShowProfile] = useState(false);
 
   const renderContent = () => {
+    if (showProfile) {
+      return <Profile onBack={() => setShowProfile(false)} />;
+    }
+
     if (!isAuthenticated) {
       return <Auth onLogin={() => setIsAuthenticated(true)} />;
     }
@@ -103,6 +109,11 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      {isAuthenticated && !showProfile && (
+        <button className="profile-btn" onClick={() => setShowProfile(true)}>
+          👤
+        </button>
+      )}
       {renderContent()}
     </div>
   );
