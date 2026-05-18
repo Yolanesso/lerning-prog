@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,7 +27,7 @@ public class LessonCompletion {
     private Long lessonId;
 
     @Column(name = "completed_at", nullable = false)
-    private Date completedAt;
+    private LocalDateTime completedAt;
 
     @Column(name = "score")
     private Integer score;
