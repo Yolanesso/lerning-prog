@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "lesson_completions")
 @Data
@@ -20,5 +24,17 @@ public class LessonCompletion {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "lesson_id", nullable = false)
+    private Long lessonId;
 
+    @Column(name = "completed_at", nullable = false)
+    private Date completedAt;
+
+    @Column(name = "score")
+    private Integer score;
+
+    @PrePersist
+    protected void onCreate() {
+        this.completedAt = LocalDateTime.now();
+    }
 }
