@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect } from 'react';
 import { bashQuestions } from '../data/bashQuestions';
 import { LessonHeader } from './lesson/LessonHeader';
 import { ChoiceExercise } from './lesson/ChoiceExercise';
 import { InputExercise } from './lesson/InputExercise';
 import { LessonFooter } from './lesson/LessonFooter';
 import './BashLesson.css';
+import { API_BASE_URL, getStoredToken } from '../lib/backend';
 
 interface BashLessonProps {
   lessonId: number;
@@ -16,32 +17,22 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [correctAnswersCount, setCorrectAnswersCount] = useState(0); 
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   const questions = bashQuestions[lessonId] || [];
   const sendProgressToBackend = async () => {
-    const rawToken = localStorage.getItem('token');
-    if (!rawToken) {
+    const token = getStoredToken();
+    if (!token) {
       console.error("Токен не найден! Прогресс не сохранен.");
       return;
     }
 
-    let token = rawToken;
-    if (rawToken.trim().startsWith('{')) {
-      try {
-        const parsed = JSON.parse(rawToken);
-        token = parsed.token;
-      } catch (e) {
-        console.error("Ошибка парсинга JSON-токена:", e);
-      }
-    }
-
-    const finalScore = questions.length > 0 
-      ? Math.round((correctAnswersCount / questions.length) * 100) 
+    const finalScore = questions.length > 0
+      ? Math.round((correctAnswersCount / questions.length) * 100)
       : 100;
 
     try {
-      const response = await fetch('http://localhost:8080/api/lessons/complete', {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/complete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,11 +61,11 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
 
   if (currentQuestionIndex >= questions.length) {
     return (
-      <div 
-        className="lesson-container" 
-        style={{ 
-          justifyContent: 'center', 
-          alignItems: 'center', 
+      <div
+        className="lesson-container"
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
           textAlign: 'center',
           '--theme-color': '#58cc02',
           '--theme-shadow': '#58a700',
@@ -99,8 +90,8 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  
-  const isCorrect = currentQuestion.type === 'choice' 
+
+  const isCorrect = currentQuestion.type === 'choice'
     ? selectedOption === currentQuestion.correctOption
     : inputValue.trim().toLowerCase() === currentQuestion.correctAnswer.toLowerCase();
 
@@ -109,11 +100,11 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
   const handleSubmit = () => {
     if (currentQuestion.type === 'choice' && selectedOption === null) return;
     if (currentQuestion.type === 'input' && inputValue.trim() === '') return;
-    
+
     if (isCorrect) {
       setCorrectAnswersCount(prev => prev + 1);
     }
-    
+
     setIsSubmitted(true);
   };
 
@@ -124,12 +115,12 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
     setIsSubmitted(false);
   };
 
-  const isNextDisabled = currentQuestion.type === 'choice' 
-    ? selectedOption === null 
+  const isNextDisabled = currentQuestion.type === 'choice'
+    ? selectedOption === null
     : inputValue.trim() === '';
 
   return (
-    <div 
+    <div
       className="lesson-container"
       style={{
         '--theme-color': '#58cc02',
@@ -139,15 +130,15 @@ export function BashLesson({ lessonId, onBack }: BashLessonProps) {
         '--theme-text-color': 'white'
       } as React.CSSProperties}
     >
-      <LessonHeader 
-        progressPercent={progressPercent} 
-        onBack={onBack} 
+      <LessonHeader
+        progressPercent={progressPercent}
+        onBack={onBack}
       />
 
       <h2 className="lesson-title">{currentQuestion.title}</h2>
 
       {currentQuestion.type === 'choice' ? (
-        <ChoiceExercise 
+        <ChoiceExercise
           options={currentQuestion.options}
           selectedOption={selectedOption}
           correctOption={currentQuestion.correctOption}

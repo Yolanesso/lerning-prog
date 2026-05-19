@@ -5,6 +5,7 @@ import { ChoiceExercise } from './lesson/ChoiceExercise';
 import { InputExercise } from './lesson/InputExercise';
 import { LessonFooter } from './lesson/LessonFooter';
 import './BashLesson.css';
+import { API_BASE_URL, getStoredToken } from '../lib/backend';
 
 interface PythonLessonProps {
   lessonId: number;
@@ -20,20 +21,10 @@ export function PythonLesson({ lessonId, onBack }: PythonLessonProps) {
 
   const questions = pythonQuestions[lessonId] || [];
   const sendProgressToBackend = async () => {
-    const rawToken = localStorage.getItem('token');
-    if (!rawToken) {
+    const token = getStoredToken();
+    if (!token) {
       console.error("Токен не найден! Прогресс не сохранен.");
       return;
-    }
-
-    let token = rawToken;
-    if (rawToken.trim().startsWith('{')) {
-      try {
-        const parsed = JSON.parse(rawToken);
-        token = parsed.token;
-      } catch (e) {
-        console.error("Ошибка парсинга JSON-токена:", e);
-      }
     }
 
     const finalScore = questions.length > 0 
@@ -41,7 +32,7 @@ export function PythonLesson({ lessonId, onBack }: PythonLessonProps) {
       : 100;
 
     try {
-      const response = await fetch('http://localhost:8080/api/lessons/complete', {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/complete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

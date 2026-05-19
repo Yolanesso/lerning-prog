@@ -1,25 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Profile.css';
-
-interface CourseProgress {
-  id: string;
-  name: string;
-  icon: string;
-  themeColor: string;
-  totalLessons: number;
-  completedLessons: number;
-  totalXp: number;
-  earnedXp: number;
-}
-
-interface UserProfile {
-  username: string;
-  email: string;
-  totalXp: number;
-  lessonsCompleted: number;
-  streak: number;
-  courses: CourseProgress[];
-}
+import type { UserProfile } from '../types/profile';
+import { API_BASE_URL, getStoredToken } from '../lib/backend';
 
 const mockProfile: UserProfile = {
   username: 'user',
@@ -63,10 +45,41 @@ const mockProfile: UserProfile = {
 
 interface ProfileProps {
   onBack: () => void;
+  onLogout: () => void;
 }
 
-export function Profile({ onBack }: ProfileProps) {
-  const [profile] = useState<UserProfile>(mockProfile);
+export function Profile({ onBack, onLogout }: ProfileProps) {
+  const [profile, setProfile] = useState<UserProfile>(mockProfile);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const token = getStoredToken();
+
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/users/me/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setProfile(data);
+        }
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const initials = profile.username
     .split(' ')
@@ -80,9 +93,15 @@ export function Profile({ onBack }: ProfileProps) {
       <div className="profile-header">
         <button className="back-btn" onClick={onBack}>✖</button>
         <h1 className="profile-title">Профиль</h1>
+        <button className="profile-logout-btn" onClick={onLogout}>Выйти</button>
       </div>
 
       <div className="profile-content">
+        {isLoading && <div className="profile-note">пробуем загрузить профиль с backend...</div>}
+        {!isLoading && profile === mockProfile && (
+          <div className="profile-note">пока тут заглушка. Когда Java доделают, профиль начнет грузиться с backend.</div>
+        )}
+
         <div className="profile-avatar-section">
           <div className="profile-avatar">
             <span className="profile-initials">{initials}</span>
