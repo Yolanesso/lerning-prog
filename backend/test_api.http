@@ -1,0 +1,29 @@
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "stas_test",
+  "email": "stas@example.com",
+  "password": "password123"
+}
+###
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "stas_test",
+  "password": "password123"
+}
+
+###
+
+
+POST http://localhost:8080/api/lessons/complete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFzX3Rlc3QiLCJpYXQiOjE3NzkxMjQzMzQsImV4cCI6MTc3OTIxMDczNH0.bm7xzaZs76lKIUJo-Zh06w_NtV4a47tSaqK95_mG3vc
+
+{
+  "lessonId": 1,
+  "score": 85
+}
