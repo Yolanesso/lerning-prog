@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { pythonQuestions } from '../data/pythonQuestions';
 import { LessonHeader } from './lesson/LessonHeader';
 import { ChoiceExercise } from './lesson/ChoiceExercise';
@@ -16,8 +16,57 @@ export function PythonLesson({ lessonId, onBack }: PythonLessonProps) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0); 
 
   const questions = pythonQuestions[lessonId] || [];
+  const sendProgressToBackend = async () => {
+    const rawToken = localStorage.getItem('token');
+    if (!rawToken) {
+      console.error("Токен не найден! Прогресс не сохранен.");
+      return;
+    }
+
+    let token = rawToken;
+    if (rawToken.trim().startsWith('{')) {
+      try {
+        const parsed = JSON.parse(rawToken);
+        token = parsed.token;
+      } catch (e) {
+        console.error("Ошибка парсинга JSON-токена:", e);
+      }
+    }
+
+    const finalScore = questions.length > 0 
+      ? Math.round((correctAnswersCount / questions.length) * 100) 
+      : 100;
+
+    try {
+      const response = await fetch('http://localhost:8080/api/lessons/complete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          lessonId: lessonId,
+          score: finalScore
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Прогресс по Python успешно сохранен на сервере!");
+      } else {
+        console.error("Сервер вернул ошибку при сохранении прогресса:", response.status);
+      }
+    } catch (err) {
+      console.error("Не удалось связаться с бэкендом:", err);
+    }
+  };
+  useEffect(() => {
+    if (questions.length > 0 && currentQuestionIndex >= questions.length) {
+      sendProgressToBackend();
+    }
+  }, [currentQuestionIndex]);
 
   if (currentQuestionIndex >= questions.length) {
     return (
@@ -60,6 +109,11 @@ export function PythonLesson({ lessonId, onBack }: PythonLessonProps) {
   const handleSubmit = () => {
     if (currentQuestion.type === 'choice' && selectedOption === null) return;
     if (currentQuestion.type === 'input' && inputValue.trim() === '') return;
+    
+    if (isCorrect) {
+      setCorrectAnswersCount(prev => prev + 1);
+    }
+    
     setIsSubmitted(true);
   };
 
