@@ -16,9 +16,17 @@ function App() {
   const [selectedLesson, setSelectedLesson] = useState<number | null>(null);
   const [showProfile, setShowProfile] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    setSelectedCourse('');
+    setSelectedLesson(null);
+    setShowProfile(false);
+  };
+
   const renderContent = () => {
     if (showProfile) {
-      return <Profile onBack={() => setShowProfile(false)} />;
+      return <Profile onBack={() => setShowProfile(false)} onLogout={handleLogout} />;
     }
 
     if (!isAuthenticated) {

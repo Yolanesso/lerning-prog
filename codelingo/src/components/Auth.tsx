@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Auth.css';
+import { API_BASE_URL } from '../lib/backend';
 
 export function Auth({ onLogin }: { onLogin: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,8 +14,8 @@ export function Auth({ onLogin }: { onLogin: () => void }) {
     setError('');
 
     const url = isLogin
-        ? 'http://localhost:8080/api/auth/login'
-        : 'http://localhost:8080/api/auth/register';
+        ? `${API_BASE_URL}/api/auth/login`
+        : `${API_BASE_URL}/api/auth/register`;
 
     // Формируем объект для отправки. Для логина почта обычно не нужна,
     const payload = isLogin
@@ -32,8 +33,8 @@ export function Auth({ onLogin }: { onLogin: () => void }) {
 
       if (response.ok) {
         if (isLogin) {
-          const token = await response.text();
-          localStorage.setItem('token', token);
+          const data = await response.json();
+          localStorage.setItem('token', data.token);
           onLogin();
         } else {
           alert('Регистрация успешна!');

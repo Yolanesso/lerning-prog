@@ -20,6 +20,29 @@
   font-size: 24px;
   font-weight: 800;
   margin: 0;
+  flex: 1;
+}
+
+.profile-logout-btn {
+  border: none;
+  background-color: #ff4b4b;
+  color: white;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #d93b3b;
+}
+
+.profile-note {
+  background-color: #f7f7f7;
+  border: 2px solid #e5e5e5;
+  color: #777;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 14px;
+  border-radius: 14px;
 }
 
 .profile-content {
