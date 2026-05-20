@@ -1,0 +1,137 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+}
+
+.auth-card {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  border-radius: 24px;
+  box-shadow: 0 4px 0px rgba(229, 229, 229, 1), 0 10px 20px rgba(0, 0, 0, 0.05);
+  border: 2px solid #e5e5e5;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.auth-title {
+  color: #3c3c3c;
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 800;
+  margin-top: 0;
+}
+
+.auth-subtitle {
+  color: #777;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.auth-error {
+  background-color: #ffdfe0;
+  color: #ff4b4b;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  border: 2px solid #ffb3b8;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: #4b4b4b;
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.form-group input {
+  padding: 15px;
+  border: 2px solid #e5e5e5;
+  border-radius: 16px;
+  font-size: 16px;
+  color: #3c3c3c;
+  outline: none;
+  background-color: #f7f7f7;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #58cc02;
+  background-color: white;
+}
+
+.auth-button {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.main-btn {
+  background-color: #58cc02;
+  color: white;
+  box-shadow: 0 4px 0 #58a700;
+}
+
+.main-btn:hover {
+  background-color: #61e002;
+}
+
+.main-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #58a700;
+}
+
+.auth-switch {
+  margin-top: 25px;
+  border-top: 2px solid #e5e5e5;
+  padding-top: 20px;
+}
+
+.auth-switch p {
+  color: #777;
+  margin-bottom: 10px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.switch-btn {
+  background: none;
+  border: none;
+  color: #1cb0f6;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.switch-btn:hover {
+  color: #1899d6;
+}

@@ -1,0 +1,86 @@
+.levels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.levels-header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+  padding: 20px 0;
+}
+
+.levels-header .back-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #afafaf;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+}
+
+.levels-title {
+  flex: 1;
+  text-align: center;
+  color: #3c3c3c;
+  font-weight: 800;
+  margin: 0;
+  font-size: 28px;
+}
+
+.levels-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  width: 100%;
+}
+
+.level-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.level-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: none;
+  background-color: #58cc02;
+  color: white;
+  font-size: 36px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 0 #58a700;
+  transition: all 0.1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.level-button:hover {
+  background-color: #61e002;
+}
+
+.level-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0 #58a700;
+}
+
+.level-label {
+  color: #3c3c3c;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 16px;
+}

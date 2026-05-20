@@ -1,0 +1,48 @@
+
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: codelingo-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lerning_prog
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database:/sql:ro
+      - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: codelingo-backend
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/lerning_prog
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./codelingo
+      dockerfile: Dockerfile
+    container_name: codelingo-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
